@@ -1,0 +1,55 @@
+{
+  "name": "aws_parameter_store",
+  "description": "Provides the aws_parameter_store method",
+  "long_description": "# aws_parameter_store\n\nChef recipe helper to retrieve data from [Amazon EC2 Systems Manager Parameter Store](https://aws.amazon.com/ec2/systems-manager/parameter-store/).\n\n## Use\n\nEnsure the instance has an IAM role with access to retrieve the parameters and use the helper following one of these examples:\n\n### Individual Values\n\n```\ntemplate '/tmp/myfile.properties' do\n  variables(\n    password: aws_parameter_store('us-east-1')['dev.mydatabase.password']\n  )\nend\n```\n\n### Multiple Values\n\n#### Wildcard\n\n```\nmy_params = aws_parameter_store('us-east-1')['dev.mydatabase.*']\n# => {'dev.mydatabase.username' => 'foo', 'dev.mydatabase.password' => 'bar'}\ntemplate '/tmp/myfile.properties' do\n  variables(\n    password: my_params['dev.mydatabase.password']\n  )\nend\n```\n\nNOTE: The wildcard asterisk is only supported as the last item in the string\n\n#### Array\n\n```\nmy_params = aws_parameter_store('us-east-1')[%w(dev.mydatabase.username dev.mydatabase.password)]\n# => {'dev.mydatabase.username' => 'foo', 'dev.mydatabase.password' => 'bar'}\ntemplate '/tmp/myfile.properties' do\n  variables(\n    password: my_params['dev.mydatabase.password']\n  )\nend\n```\n\n## Attributes\n\nThe region and decryption options can also be set via attributes, e.g.:\n```\nnode.default['aws_parameter_store']['region'] = 'us-east-1'\nnode.default['aws_parameter_store']['decrypt_secure_strings'] = false\ntemplate '/tmp/myfile.properties' do\n  variables(\n    password: aws_parameter_store['dev.mydatabase.password']\n  )\nend\n```\n\n## Additional Attributes\n\n### Retries/Backoff\n\nThe maximum number of retries and delay (for exponential backoff/retry of API calls) can be set via the `['aws_parameter_store']['max_retries']` & `['aws_parameter_store']['max_retry_sleep_seconds']` attributes.\n\n## Credits\n\nHeavy inspiration drawn from the [Citadel cookbook](https://github.com/poise/citadel).\n",
+  "maintainer": "Sturdy Networks",
+  "maintainer_email": "devops@sturdy.cloud",
+  "license": "All rights reserved",
+  "platforms": {
+    "amazon": ">= 0.0.0",
+    "redhat": ">= 0.0.0",
+    "centos": ">= 0.0.0",
+    "ubuntu": ">= 0.0.0",
+    "windows": ">= 0.0.0"
+  },
+  "dependencies": {
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  },
+  "version": "2.0.0",
+  "source_url": "https://bitbucket.org/nbdev/aws_parameter_store-cookbook",
+  "issues_url": "",
+  "privacy": false,
+  "chef_versions": [
+    [
+      ">= 12.8"
+    ]
+  ],
+  "ohai_versions": [
+
+  ],
+  "gems": [
+    [
+      "aws-sdk",
+      "~> 2"
+    ],
+    [
+      "retries",
+      "~> 0.0"
+    ]
+  ]
+}
